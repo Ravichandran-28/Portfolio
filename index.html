@@ -105,6 +105,10 @@
             gap: 1.5rem;
         }
 
+        .menu-toggle {
+            display: none;
+        }
+
         .nav-links a {
             font-size: 0.9rem;
             font-weight: 500;
@@ -169,7 +173,7 @@
             border: 4px solid var(--accent-primary);
             box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
             object-fit: cover;
-            object-position: top;
+            object-position: center 48%;
             aspect-ratio: 1/1;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             animation: float-slow 8s ease-in-out infinite alternate;
@@ -244,12 +248,12 @@
             background: var(--gradient-text);
             color: white;
             border: none;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.4);
         }
 
         .btn-secondary {
@@ -283,7 +287,7 @@
         }
 
         .badge:hover {
-            background: rgba(0, 240, 255, 0.1);
+            background: rgba(0, 229, 255, 0.1);
             border-color: var(--accent-primary);
             color: var(--accent-primary);
             transform: translateY(-2px);
@@ -367,6 +371,7 @@
             background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s;
+            pointer-events: none; /* allow clicks to pass through the decorative overlay */
         }
 
         .glass-card:hover::before {
@@ -428,7 +433,7 @@
         /* Projects Section */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
@@ -462,6 +467,31 @@
 
         .project-desc li {
             margin-bottom: 0.5rem;
+        }
+
+        .project-media {
+            display: flex;
+            gap: 0.6rem;
+            margin: 0.8rem 0 1rem;
+            align-items: center;
+        }
+
+        .project-media img {
+            width: calc(33.333% - 0.4rem);
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .project-media img:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+        }
+
+        @media (max-width: 768px) {
+            .project-media img { height: 84px; }
         }
 
         /* Timeline Section */
@@ -617,7 +647,7 @@
         }
 
         .social-links a:hover {
-            background: rgba(0, 240, 255, 0.1);
+            background: rgba(0, 229, 255, 0.1);
             color: var(--accent-primary);
             border-color: var(--accent-primary);
             transform: translateY(-3px);
@@ -680,12 +710,77 @@
         }
 
         @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 25px;
+                height: 18px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                z-index: 1001;
+                padding: 0;
+            }
+
+            .menu-toggle span {
+                display: block;
+                width: 100%;
+                height: 2px;
+                background-color: var(--text-primary);
+                border-radius: 2px;
+                transition: all 0.3s ease;
+            }
+
+            /* Hamburger animation when active */
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+                background-color: var(--accent-primary);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+                background-color: var(--accent-primary);
+            }
+
             .nav-links {
-                display: none;
+                display: flex;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                height: 100vh;
+                background: rgba(6, 10, 18, 0.98);
+                backdrop-filter: var(--glass-blur);
+                border-left: 1px solid rgba(0, 229, 255, 0.1);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                transition: right 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+                z-index: 1000;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 0.5rem 0;
             }
 
             .hero-title {
                 font-size: 2.8rem;
+                white-space: normal;
             }
 
             .hero-subtitle {
@@ -701,6 +796,8 @@
             }
         }
 
+
+
         /* Network Background */
         #bg-canvas {
             position: fixed;
@@ -712,10 +809,25 @@
             opacity: 0.3;
             pointer-events: none;
         }
+
+        /* Contact Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+
     <!-- Data Analyst Network Background -->
     <canvas id="bg-canvas"></canvas>
 
@@ -723,6 +835,12 @@
     <nav id="navbar">
         <div class="container nav-content">
             <div class="logo">RAVICHANDRAN S</div>
+            <!-- Hamburger Menu Button -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="nav-links">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
@@ -730,6 +848,7 @@
                 <a href="#skills">Skills</a>
                 <a href="#projects">Projects</a>
                 <a href="#journey">Journey</a>
+                <a href="#contact">Contact</a>
             </div>
         </div>
     </nav>
@@ -742,7 +861,8 @@
                 <div class="hero-content fade-in">
                     <span class="hero-greeting">Hello, recruiters! I am</span>
                     <h1 class="hero-title">Ravichandran <span>S</span></h1>
-                    <h2 class="hero-subtitle">Artificial Intelligence & Data Science Student | Data Analyst</h2>
+                    <h2 class="hero-subtitle">Artificial Intelligence & Data Science Student | Data Analyst | Business
+                        Analyst</h2>
 
                     <p style="color: var(--text-secondary); max-width: 500px; font-size: 1.1rem; margin-bottom: 2rem;">
                         Passionate about transforming raw data into meaningful insights to support business
@@ -761,7 +881,7 @@
                 </div>
 
                 <div class="hero-image fade-in">
-                    <img src="profile.jpg" alt="Ravichandran S Photo">
+                    <img src="profile.jpeg" alt="Ravichandran S Photo">
                 </div>
             </div>
         </div>
@@ -780,12 +900,14 @@
                         <h3 class="outfit" style="font-size: 1.8rem; margin-bottom: 1rem; color: white;">Executive
                             Summary</h3>
                         <p>
-                            Data-driven and detail-oriented Artificial Intelligence and Data Science student with strong
-                            skills in data analysis, visualization, and database management.
+                            Data-driven Artificial Intelligence and Data Science student aspiring to build a career as a
+                            Data Analyst and Business Analyst, with strong skills in data analysis, visualization, and
+                            database management.
                         </p>
                         <p>
-                            Proficient in Python, SQL, Power BI, and Excel for extracting insights and building
-                            dashboards.
+                            Proficient in Python, SQL, Power BI, and Excel to extract insights, create dashboards, and
+                            support data-driven business decisions while translating data into meaningful business
+                            outcomes.
                         </p>
                         <p
                             style="color: var(--text-primary); font-weight: 500; font-size: 1.2rem; margin-top: 2rem; border-left: 3px solid var(--accent-primary); padding-left: 1rem;">
@@ -801,8 +923,7 @@
                             Information</h3>
                         <ul class="contact-list">
                             <li><i class="fas fa-envelope"></i> <a
-                                    href="https://mail.google.com/mail/?view=cm&fs=1&to=ranjithjr2005@gmail.com&su=Job%20Opportunity:%20Data%20Analyst&body=Hi%20Ravichandran,%0A%0AWe%20saw%20your%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20regarding%20an%20opportunity."
-                                    target="_blank"
+                                    href="mailto:ranjithjr2005@gmail.com?subject=Job%20Opportunity:%20Data%20Analyst&body=Hi%20Ravichandran,%0A%0AWe%20saw%20your%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20regarding%20an%20opportunity."
                                     style="color: inherit; text-decoration: none; transition: color 0.3s;"
                                     onmouseover="this.style.color='var(--accent-primary)'"
                                     onmouseout="this.style.color='inherit'">ranjithjr2005@gmail.com</a></li>
@@ -827,29 +948,115 @@
             </div>
 
             <div class="timeline-wrapper" style="grid-template-columns: 1fr; max-width: 900px; margin: 0 auto;">
-                <div class="timeline fade-in">
-                    <div class="timeline-item">
-                        <div class="timeline-date">Jan 2026 - Mar 2026</div>
-                        <h4 class="timeline-title">Human Resources Analyst</h4>
-                        <div class="timeline-subtitle">Zetheta Algorithms Private Limited</div>
-                        <span class="timeline-grade" style="margin-bottom: 0.5rem;">Short-term (15 Full-Time Days
-                            Equivalent)</span>
-                        <ul class="timeline-list">
-                            <li>Completed HR Analyst for Banks project focusing on HR analytics (January 2026)</li>
-                            <li>Worked on HR Analyst for Insurance domain project (February 2026)</li>
-                            <li>Worked on HR Analyst in Mutual Funds project (February 2026)</li>
-                            <li>Completed project on Founder Compensation Benchmarking (March 2026)</li>
-                        </ul>
+                <div class="fade-in">
+                    <!-- Internship 1: Digital Nexus AI -->
+                    <div
+                        style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div
+                            style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-primary);">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <div
+                                style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                April 2026 - Present</div>
+                            <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Business
+                                Analyst Intern</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">Digital Nexus AI</div>
+                            <ul
+                                style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
+                                <li>Elicited and documented business requirements, converting stakeholder expectations
+                                    into functional specifications and user stories.</li>
+                                <li>Performed market intelligence, competitor assessments, and product analysis to
+                                    support strategic planning and feature prioritization.</li>
+                                <li>Partnered with cross-functional teams to streamline workflows, monitor project
+                                    milestones, and enhance solution delivery.</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-date">17 Jul 2024 - 23 Jul 2024</div>
-                        <h4 class="timeline-title">Digital Marketing Intern</h4>
-                        <div class="timeline-subtitle">Retech Solutions Pvt. Ltd.</div>
-                        <ul class="timeline-list">
-                            <li>Completed internship training in Digital Marketing</li>
-                            <li>Worked on project titled "Digital Marketing Engagement and Management"</li>
-                        </ul>
+                    <!-- Internship 2: Cognifyz Technologies -->
+                    <div
+                        style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div
+                            style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-primary);">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <div
+                                style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                April 2026 - May 2026</div>
+                            <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Business
+                                Analyst Intern</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">Cognifyz Technologies</div>
+                            <ul
+                                style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
+                                <li>Evaluated business datasets to uncover trends, patterns, and opportunities for
+                                    process improvement.</li>
+                                <li>Applied analytical techniques to support business decisions and recommend
+                                    data-backed solutions.</li>
+                                <li>Coordinated with project teams to facilitate reporting, requirement analysis, and
+                                    stakeholder communication.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Internship 3: Zetheta Algorithms Private Limited -->
+                    <div
+                        style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div
+                            style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-primary);">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <div
+                                style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                Jan 2026 - Mar 2026</div>
+                            <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Human
+                                Resources Analyst Intern</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">Zetheta Algorithms Private
+                                Limited</div>
+                            <div style="color: var(--accent-primary); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                                Short-term (15 Full-Time Days Equivalent)</div>
+                            <ul
+                                style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0;">
+                                <li>Executed HR analytics projects across Banking, Insurance, and Mutual Fund sectors to
+                                    support workforce planning initiatives.</li>
+                                <li>Assessed employee and organizational metrics to identify performance trends and
+                                    operational insights.</li>
+                                <li>Measured key HR indicators and developed analytical reports to strengthen talent
+                                    management strategies.</li>
+                                <li>Conducted compensation benchmarking studies to evaluate market competitiveness and
+                                    support compensation planning.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Internship 4: Retech Solutions Pvt. Ltd. -->
+                    <div
+                        style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div
+                            style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-primary);">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <div
+                                style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                July 2024</div>
+                            <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Digital
+                                Marketing Intern</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">Retech Solutions Pvt. Ltd.
+                            </div>
+                            <ul
+                                style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0;">
+                                <li>Participated in digital marketing initiatives focused on customer engagement and
+                                    brand visibility.</li>
+                                <li>Assisted in campaign analysis and performance tracking to evaluate marketing
+                                    effectiveness.</li>
+                                <li>Contributed to the Digital Marketing Engagement and Management project through
+                                    research and content support.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -913,7 +1120,13 @@
 
             <div class="projects-grid">
                 <!-- Project 1 -->
-                <div class="glass-card project-card fade-in">
+                <a href="https://github.com/Ravichandran-28/Adidas-Dashboard" target="_blank"
+                    class="glass-card project-card fade-in" style="text-decoration: none; cursor: pointer;">
+                    <div
+                        style="width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas Logo"
+                            style="width: 120px; filter: invert(1);">
+                    </div>
                     <span class="project-role">Business/Data Analyst Project</span>
                     <h3 class="project-title outfit">Adidas Sales Dashboard (Power BI)</h3>
                     <ul class="project-desc">
@@ -922,10 +1135,15 @@
                         <li>Analyzed sales trends, regional performance, and product insights.</li>
                         <li>Provided actionable insights to support business decision-making.</li>
                     </ul>
-                </div>
+                </a>
 
                 <!-- Project 2 -->
-                <div class="glass-card project-card fade-in">
+                <a href="https://github.com/Ravichandran-28/Fraud-Detection-Analysis" target="_blank"
+                    class="glass-card project-card fade-in" style="text-decoration: none; cursor: pointer;">
+                    <div
+                        style="width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05);">
+                        <i class="fas fa-shield-alt" style="font-size: 5rem; color: var(--accent-primary);"></i>
+                    </div>
                     <span class="project-role">Data Analyst Project</span>
                     <h3 class="project-title outfit">Online Fraud Detection Analysis</h3>
                     <ul class="project-desc">
@@ -934,10 +1152,33 @@
                         <li>Created dashboards to visualize anomalies and trends.</li>
                         <li>Improved understanding of fraud detection techniques using data insights.</li>
                     </ul>
-                </div>
+                </a>
 
                 <!-- Project 3 -->
-                <div class="glass-card project-card fade-in">
+                <a href="https://github.com/Ravichandran-28/Uber-dashboard" target="_blank"
+                    class="glass-card project-card fade-in" style="text-decoration: none; cursor: pointer;">
+                    <div
+                        style="width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
+                            alt="Uber Logo" style="width: 140px; filter: invert(1);">
+                    </div>
+                    <span class="project-role">Data Analyst Project</span>
+                    <h3 class="project-title outfit">Uber Data Analysis Dashboard</h3>
+                    <ul class="project-desc">
+                        <li>Developed a comprehensive dashboard to analyze and visualize Uber ride data.</li>
+                        <li>Created interactive visualizations for key metrics like ride volume and revenue.</li>
+                        <li>Derived actionable business insights to optimize performance and operations.</li>
+                    </ul>
+                </a>
+
+                <!-- Project 4 -->
+                <a href="https://github.com/Ravichandran-28/Speech-Recognition" target="_blank"
+                    class="glass-card project-card fade-in" style="text-decoration: none; cursor: pointer;">
+                    <div class="project-media" aria-hidden="true">
+                        <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=800&q=60" alt="Microphone">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=60" alt="Waveform visualization">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=60" alt="Spectrogram style">
+                    </div>
                     <span class="project-role">AI/ML Project</span>
                     <h3 class="project-title outfit">Speech Emotion Recognition using Deep Learning</h3>
                     <ul class="project-desc">
@@ -945,7 +1186,7 @@
                         <li>Applied deep learning techniques for classification and prediction.</li>
                         <li>Explored applications in recommendation systems and human-computer interaction.</li>
                     </ul>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -960,102 +1201,236 @@
             <div class="timeline-wrapper">
                 <!-- Left Column: Education & Achievements -->
                 <div>
-                    <h3 class="outfit" style="font-size: 1.8rem; margin-bottom: 2rem; color: white;">Education</h3>
-                    <div class="timeline fade-in">
-                        <div class="timeline-item">
-                            <div class="timeline-date">2023 - 2027</div>
-                            <h4 class="timeline-title">B.Tech Artificial Intelligence And Data Science</h4>
-                            <div class="timeline-subtitle">PRATHYUSHA ENGINEERING COLLEGE</div>
-                            <span class="timeline-grade">CGPA: 8.4</span>
+                    <h3 class="outfit" style="font-size: 1.8rem; margin-bottom: 2rem; color: white;"><i
+                            class="fas fa-graduation-cap"
+                            style="color: var(--accent-primary); margin-right: 10px;"></i>Education</h3>
+                    <div class="fade-in">
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-primary);">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    2023 - 2027</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">B.Tech
+                                    Artificial Intelligence And Data Science</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">PRATHYUSHA ENGINEERING
+                                    COLLEGE</div>
+                                <div
+                                    style="margin-top: 0.5rem; display: inline-block; color: var(--accent-primary); font-size: 0.85rem; background: rgba(0,229,255,0.05); padding: 0.2rem 0.6rem; border-radius: 4px;">
+                                    CGPA: 8.4</div>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">2022 - 2023</div>
-                            <h4 class="timeline-title">Higher Secondary School Certificate (HSLC)</h4>
-                            <div class="timeline-subtitle">MONTFORT MATRICULATION HIGHER SECONDARY SCHOOL</div>
-                            <span class="timeline-grade">Percentage: 81%</span>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-primary);">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    2022 - 2023</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Higher
+                                    Secondary School Certificate (HSLC)</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">MONTFORT MATRICULATION
+                                    HIGHER SECONDARY SCHOOL</div>
+                                <div
+                                    style="margin-top: 0.5rem; display: inline-block; color: var(--accent-primary); font-size: 0.85rem; background: rgba(0,229,255,0.05); padding: 0.2rem 0.6rem; border-radius: 4px;">
+                                    Percentage: 81%</div>
+                            </div>
                         </div>
                     </div>
 
-                    <h3 class="outfit" style="font-size: 1.8rem; margin: 3rem 0 2rem; color: white;">Key Achievements
-                    </h3>
-                    <div class="timeline fade-in">
-                        <div class="timeline-item">
-                            <div class="timeline-date">Hackathon</div>
-                            <h4 class="timeline-title">Prize-Winning Team (ITPRBLM B track)</h4>
-                            <div class="timeline-subtitle">PALS Think2Impact - Team YANTRAMANAV 2.0</div>
-                            <p class="timeline-text">Represented PRATHYUSHA ENGINEERING COLLEGE in Hackathon.</p>
+                    <h3 class="outfit" style="font-size: 1.8rem; margin: 3rem 0 2rem; color: white;"><i
+                            class="fas fa-award" style="color: var(--accent-secondary); margin-right: 10px;"></i>Key
+                        Achievements</h3>
+                    <div class="fade-in">
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(255, 179, 0, 0.1); border: 1px solid rgba(255, 179, 0, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-secondary);">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-secondary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    Hackathon</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">
+                                    Prize-Winning Team (ITPRBLM B track)</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                    PALS Think2Impact - Team YANTRAMANAV 2.0</div>
+
+                                <div style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5;">
+                                    Represented PRATHYUSHA ENGINEERING COLLEGE in Hackathon.</div>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">12th Board Exam</div>
-                            <h4 class="timeline-title">Centum Holder - Computer Science</h4>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(255, 179, 0, 0.1); border: 1px solid rgba(255, 179, 0, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-secondary);">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-secondary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    12th Board Exam</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Centum
+                                    Holder - Computer Science</h4>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">2018, 2019</div>
-                            <h4 class="timeline-title">1st Rank - Abacus Interschool Competition</h4>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(255, 179, 0, 0.1); border: 1px solid rgba(255, 179, 0, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-secondary);">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-secondary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    2018, 2019</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">1st Rank
+                                    - Abacus Interschool Competition</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Column: Major Certifications & Workshops -->
                 <div>
-                    <h3 class="outfit" style="font-size: 1.8rem; margin-bottom: 2rem; color: white;">Major
-                        Certifications & Workshops</h3>
-                    <div class="timeline fade-in">
-                        <div class="timeline-item">
-                            <div class="timeline-date">October 2025</div>
-                            <h4 class="timeline-title">Data Analyst Certification</h4>
-                            <div class="timeline-subtitle">Infosys Springboard</div>
-                            <ul class="timeline-list">
-                                <li>Developed skills in data handling, cleaning, and visualization.</li>
-                                <li>Gained knowledge of business analytics concepts and reporting.</li>
-                            </ul>
+                    <h3 class="outfit" style="font-size: 1.8rem; margin-bottom: 2rem; color: white;"><i
+                            class="fas fa-certificate"
+                            style="color: var(--accent-tertiary); margin-right: 10px;"></i>Major Certifications &
+                        Workshops</h3>
+                    <div class="fade-in">
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(79, 172, 254, 0.1); border: 1px solid rgba(79, 172, 254, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-tertiary);">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-tertiary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    October 2025</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Data
+                                    Analyst Certification</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                    Infosys Springboard</div>
+                                <ul
+                                    style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0;">
+                                    <li>Developed skills in data handling, cleaning, and visualization.</li>
+                                    <li>Gained knowledge of business analytics concepts and reporting.</li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">September 2025</div>
-                            <h4 class="timeline-title">Power BI Workshop</h4>
-                            <div class="timeline-subtitle">Office Master (Online)</div>
-                            <ul class="timeline-list">
-                                <li>Acquired practical skills in building interactive dashboards and conveying
-                                    data-driven insights.</li>
-                                <li>Gained foundational knowledge in data modeling, transformation, and utilizing DAX
-                                    expressions.</li>
-                            </ul>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(79, 172, 254, 0.1); border: 1px solid rgba(79, 172, 254, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-tertiary);">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-tertiary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    September 2025</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Power BI
+                                    Workshop</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                    Office Master (Online)</div>
+                                <ul
+                                    style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0;">
+                                    <li>Acquired practical skills in building interactive dashboards and conveying
+                                        data-driven insights.</li>
+                                    <li>Gained foundational knowledge in data modeling, transformation, and utilizing
+                                        DAX expressions.</li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">July 2025</div>
-                            <h4 class="timeline-title">Regression Analysis</h4>
-                            <div class="timeline-subtitle">Infosys</div>
-                            <ul class="timeline-list">
-                                <li>Learned statistical methods for data analysis and predictive modeling.</li>
-                                <li>Applied regression techniques to analyze datasets and identify trends.</li>
-                            </ul>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(79, 172, 254, 0.1); border: 1px solid rgba(79, 172, 254, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-tertiary);">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-tertiary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    July 2025</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">
+                                    Regression Analysis</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                    Infosys</div>
+                                <ul
+                                    style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6; margin: 0;">
+                                    <li>Learned statistical methods for data analysis and predictive modeling.</li>
+                                    <li>Applied regression techniques to analyze datasets and identify trends.</li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">May 2025</div>
-                            <h4 class="timeline-title">Power BI</h4>
-                            <div class="timeline-subtitle">NoviTech R&D Pvt Ltd</div>
-                            <p class="timeline-text">Completed a 30-day intensive training program covering data
-                                analytics and Power BI. Built interactive dashboards using real-time datasets.</p>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(79, 172, 254, 0.1); border: 1px solid rgba(79, 172, 254, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-tertiary);">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-tertiary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    May 2025</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Power BI
+                                </h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                    NoviTech R&D Pvt Ltd</div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+                                    Completed a 30-day intensive training program covering data analytics and Power BI.
+                                    Built interactive dashboards using real-time datasets.</div>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">April 2025</div>
-                            <h4 class="timeline-title">Data Analytics</h4>
-                            <div class="timeline-subtitle">NoviTech R&D Pvt Ltd</div>
-                            <p class="timeline-text">Completed a 30-day intensive training program in data analytics.
-                            </p>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(79, 172, 254, 0.1); border: 1px solid rgba(79, 172, 254, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-tertiary);">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-tertiary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    April 2025</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">Data
+                                    Analytics</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                    NoviTech R&D Pvt Ltd</div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+                                    Completed a 30-day intensive training program in data analytics.</div>
+                            </div>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date">September 2024</div>
-                            <h4 class="timeline-title">AR & VR Workshop (Immersive Technology)</h4>
-                            <div class="timeline-subtitle">Monolith Research & Training</div>
+                        <div
+                            style="display: flex; gap: 1.2rem; margin-bottom: 2rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div
+                                style="flex-shrink: 0; width: 45px; height: 45px; border-radius: 10px; background: rgba(79, 172, 254, 0.1); border: 1px solid rgba(79, 172, 254, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-tertiary);">
+                                <i class="fas fa-vr-cardboard"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="color: var(--accent-tertiary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+                                    September 2024</div>
+                                <h4 class="outfit" style="font-size: 1.15rem; color: white; margin: 0.3rem 0;">AR & VR
+                                    Workshop (Immersive Technology)</h4>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Monolith Research &
+                                    Training</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1064,50 +1439,250 @@
             <!-- Other Certifications Grid -->
             <div style="margin-top: 5rem;">
                 <h3 class="outfit fade-in"
-                    style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem; color: white;">Additional
+                    style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem; color: white;"><i
+                        class="fas fa-medal" style="color: var(--accent-primary); margin-right: 10px;"></i>Additional
                     Coursework & Badges</h3>
-                <div class="cert-grid fade-in">
-                    <div class="cert-item">
-                        <div class="cert-title">Machine Learning Foundations</div>
-                        <div class="cert-org">AWS Educate • March 2026</div>
+                <div class="fade-in"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Machine
+                                Learning Foundations</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">AWS Educate • March 2026</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Introduction to Generative AI Training</div>
-                        <div class="cert-org">AWS Educate • March 2026</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Intro to
+                                Generative AI Training</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">AWS Educate • March 2026</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Introduction to Cloud 101 Training</div>
-                        <div class="cert-org">AWS Educate • March 2026</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Intro to
+                                Cloud 101 Training</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">AWS Educate • March 2026</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Generative AI Literacy</div>
-                        <div class="cert-org">NASSCOM FutureSkills Prime</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Generative
+                                AI Literacy</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">NASSCOM FutureSkills Prime
+                            </div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Introduction to Data Analysis using Excel</div>
-                        <div class="cert-org">Coursera Project Network</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Intro to
+                                Data Analysis using Excel</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Coursera Project Network</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Fundamentals of Business Analysis</div>
-                        <div class="cert-org">Coursera</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Fundamentals
+                                of Business Analysis</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Coursera</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">GenAI in Data Analytics</div>
-                        <div class="cert-org">Coursera</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">GenAI in
+                                Data Analytics</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Coursera</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Introduction to Generative AI</div>
-                        <div class="cert-org">Google Cloud</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">MongoDB
+                                Basics for Students</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">MongoDB</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">MongoDB Basics for Students</div>
-                        <div class="cert-org">MongoDB</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Basics of
+                                Python</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Infosys Springboard</div>
+                        </div>
                     </div>
-                    <div class="cert-item">
-                        <div class="cert-title">Basics of Python</div>
-                        <div class="cert-org">Infosys Springboard</div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Askon
+                                Technologies Certificate</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Askon Technologies</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">The Joy of
+                                Computing using Python</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Course Certificate</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="display: flex; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                        <div
+                            style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent-primary);">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div>
+                            <h4 class="outfit" style="font-size: 1rem; color: white; margin: 0 0 0.2rem 0;">Programming
+                                Fundamentals using Python</h4>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Course Certificate</div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact"
+        style="padding: 6rem 0; background: rgba(6, 10, 18, 0.5); border-top: 1px solid rgba(255,255,255,0.03);">
+        <div class="container fade-in">
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title outfit"
+                    style="font-size: 2.5rem; color: white; display: inline-block; position: relative; margin-bottom: 0.5rem;">
+                    Let's Build Something Together
+                </h2>
+                <p class="contact-description"
+                    style="color: var(--text-secondary); font-size: 1.1rem; max-width: 900px; margin: 0 auto 1.5rem auto;">
+                    Have a project, internship, or opportunity in mind? I'd love to hear from you.
+                </p>
+                <div
+                    style="width: 80px; height: 3px; background: var(--gradient-text); margin: 0 auto; border-radius: 2px;">
+                </div>
+            </div>
+
+            <div class="glass-card"
+                style="max-width: 700px; margin: 0 auto; padding: 2.5rem; background: rgba(12, 19, 34, 0.6); border: 1px solid rgba(0, 229, 255, 0.08); border-radius: 16px;">
+                <form id="contact-form"
+                    action="https://formsubmit.co/380211b0adca4548460efa2d1cf88dc5"
+                    method="POST"
+                    style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Hidden configuration fields for FormSubmit -->
+                    <input type="hidden" name="_subject" value="New Portfolio Message!">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <input type="text" name="First Name" placeholder="First Name" required
+                                style="width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(6,10,18,0.4); color: white; font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.3s;"
+                                onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 0 10px rgba(0,229,255,0.2)'"
+                                onblur="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'">
+                        </div>
+                        <div class="input-group">
+                            <input type="text" name="Last Name" placeholder="Last Name" required
+                                style="width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(6,10,18,0.4); color: white; font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.3s;"
+                                onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 0 10px rgba(0,229,255,0.2)'"
+                                onblur="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" name="Email" placeholder="Email Address" required
+                            style="width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(6,10,18,0.4); color: white; font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.3s;"
+                            onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 0 10px rgba(0,229,255,0.2)'"
+                            onblur="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" name="Company" placeholder="Company (Optional)"
+                            style="width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(6,10,18,0.4); color: white; font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.3s;"
+                            onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 0 10px rgba(0,229,255,0.2)'"
+                            onblur="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" name="Subject" placeholder="Subject" required
+                            style="width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(6,10,18,0.4); color: white; font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.3s;"
+                            onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 0 10px rgba(0,229,255,0.2)'"
+                            onblur="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'">
+                    </div>
+
+                    <div class="input-group">
+                        <textarea name="Message" placeholder="Your Message" required rows="5"
+                            style="width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(6,10,18,0.4); color: white; font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.3s; resize: vertical;"
+                            onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 0 10px rgba(0,229,255,0.2)'"
+                            onblur="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'"></textarea>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary" style="border: none; padding: 1rem 3rem;">
+                            Send Message <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -1120,8 +1695,8 @@
                 insightful conversations.</p>
 
             <div class="social-links">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ranjithjr2005@gmail.com&su=Job%20Opportunity:%20Data%20Analyst&body=Hi%20Ravichandran,%0A%0AWe%20saw%20your%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20regarding%20an%20opportunity."
-                    target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="mailto:ranjithjr2005@gmail.com?subject=Job%20Opportunity:%20Data%20Analyst&body=Hi%20Ravichandran,%0A%0AWe%20saw%20your%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20regarding%20an%20opportunity."
+                    title="Email"><i class="fas fa-envelope"></i></a>
                 <a href="https://www.linkedin.com/in/ravichandran-s-baa08a296" target="_blank" title="LinkedIn"><i
                         class="fab fa-linkedin-in"></i></a>
             </div>
@@ -1137,145 +1712,105 @@
 
     <!-- JavaScript for Interactions -->
     <script>
-        // Set current year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // set current year
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
 
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
+        // Intersection Observer for .fade-in
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.15 });
 
-        document.querySelectorAll('.fade-in').forEach(element => {
-            observer.observe(element);
-        });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Data Analyst Network Background Particles
-        const canvas = document.getElementById('bg-canvas');
-        if (canvas) {
+        // Simple particle background (keeps original visual, simplified)
+        (function initParticles() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            let width, height, particles;
-            let mouse = { x: null, y: null };
+            let w = canvas.width = window.innerWidth;
+            let h = canvas.height = window.innerHeight;
+            let particles = [];
+            const count = window.innerWidth < 768 ? 40 : 90;
 
-            function initParticles() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-                particles = [];
-                const particleCount = window.innerWidth < 768 ? 40 : 90;
-
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push({
-                        x: Math.random() * width,
-                        y: Math.random() * height,
-                        vx: (Math.random() - 0.5) * 0.7,
-                        vy: (Math.random() - 0.5) * 0.7,
-                        radius: Math.random() * 1.5 + 0.5
-                    });
-                }
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.7,
+                    vy: (Math.random() - 0.5) * 0.7,
+                    r: Math.random() * 1.5 + 0.5
+                });
             }
 
-            function animateParticles() {
-                requestAnimationFrame(animateParticles);
-                ctx.clearRect(0, 0, width, height);
+            function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resize);
+
+            function anim() {
+                requestAnimationFrame(anim);
+                ctx.clearRect(0, 0, w, h);
                 ctx.fillStyle = '#00e5ff';
                 ctx.strokeStyle = '#00e5ff';
-
                 for (let i = 0; i < particles.length; i++) {
-                    let p = particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-
-                    if (p.x < 0) { p.x = 0; if (p.vx < 0) p.vx *= -1; }
-                    else if (p.x > width) { p.x = width; if (p.vx > 0) p.vx *= -1; }
-
-                    if (p.y < 0) { p.y = 0; if (p.vy < 0) p.vy *= -1; }
-                    else if (p.y > height) { p.y = height; if (p.vy > 0) p.vy *= -1; }
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Friction for high speeds after clicking
-                    if (Math.abs(p.vx) > 1 || Math.abs(p.vy) > 1) {
-                        p.vx *= 0.94;
-                        p.vy *= 0.94;
-                    }
+                    const p = particles[i];
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x > w) p.vx *= -1;
+                    if (p.y < 0 || p.y > h) p.vy *= -1;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
 
                     for (let j = i + 1; j < particles.length; j++) {
-                        let p2 = particles[j];
-                        let dx = p.x - p2.x;
-                        let dy = p.y - p2.y;
-                        let dist = Math.sqrt(dx * dx + dy * dy);
-
-                        // Prevent particles from overlaying/overlapping each other
-                        let minDist = p.radius + p2.radius + 3; // 3px buffer
-                        if (dist < minDist && dist > 0) {
-                            let angle = Math.atan2(dy, dx);
-                            let tx = p.x - Math.cos(angle) * minDist;
-                            let ty = p.y - Math.sin(angle) * minDist;
-
-                            let ax = (tx - p2.x) * 0.1;
-                            let ay = (ty - p2.y) * 0.1;
-
-                            p.vx -= ax;
-                            p.vy -= ay;
-                            p2.vx += ax;
-                            p2.vy += ay;
-                        }
-
-                        // Link distance
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x, dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
                             ctx.globalAlpha = 1 - (dist / 120);
-                            ctx.stroke();
+                            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                             ctx.globalAlpha = 1;
                         }
                     }
                 }
             }
+            anim();
 
-            window.addEventListener('resize', initParticles);
-
-            // Scatter particles on click
+            // optional click scatter
             window.addEventListener('click', (e) => {
-                const cx = e.clientX;
-                const cy = e.clientY;
                 particles.forEach(p => {
-                    let dx = p.x - cx;
-                    let dy = p.y - cy;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    const dx = p.x - e.clientX, dy = p.y - e.clientY;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
                     if (dist < 250 && dist > 1) {
-                        p.vx += (dx / dist) * 15;
-                        p.vy += (dy / dist) * 15;
+                        p.vx += (dx / dist) * 6;
+                        p.vy += (dy / dist) * 6;
                     }
                 });
             });
+        })();
 
-            initParticles();
-            animateParticles();
-        }
+        // Mobile nav toggle
+        (function mobileNav() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (!menuToggle || !navLinks) return;
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            }));
+        })();
     </script>
 </body>
 
